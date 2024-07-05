@@ -13,14 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.meet.photosappmvi.presentation.navigation.MyPhotosApp
 import com.meet.photosappmvi.ui.theme.PhotosAppMviTheme
+import com.meet.photosappmvi.viewmodel.PhotosViewModel
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        //need to use di to replace this way 
+        val photosViewModel=PhotosViewModel()
         setContent {
             PhotosAppMviTheme {
-                MyPhotosApp()
+                MyPhotosApp(photosViewModel)
             }
         }
     }

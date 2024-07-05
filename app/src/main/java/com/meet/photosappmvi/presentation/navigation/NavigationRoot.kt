@@ -19,19 +19,21 @@ import com.meet.photosappmvi.presentation.screens.FavScreen
 import com.meet.photosappmvi.presentation.screens.HomeScreen
 import com.meet.photosappmvi.presentation.screens.ProfileScreen
 import com.meet.photosappmvi.presentation.screens.SearchScreen
+import com.meet.photosappmvi.viewmodel.PhotosViewModel
 import kotlinx.serialization.Serializable
 
 @Composable
 fun NavigationRoot(
     paddingValues: PaddingValues,
     navController: NavHostController,
+    viewModel: PhotosViewModel,
     updateBottomBarState: (BottomBarState) -> Unit
 ) {
     NavHost(navController = navController, startDestination = NavRoute.HomeScreenScreenRoute) {
         //bottom navigation screens
         composable<NavRoute.HomeScreenScreenRoute> {
             updateBottomBarState(BottomBarState(true))
-            HomeScreen(navController)
+            HomeScreen(viewModel)
         }
         composable<NavRoute.SearchScreenRoute> {
             updateBottomBarState(BottomBarState(true))

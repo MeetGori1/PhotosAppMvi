@@ -32,9 +32,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.meet.photosappmvi.R
 import com.meet.photosappmvi.ui.theme.PhotosAppMviTheme
+import com.meet.photosappmvi.viewmodel.PhotosViewModel
 
 @Composable
-fun MyPhotosApp(modifier: Modifier = Modifier) {
+fun MyPhotosApp(photosViewModel: PhotosViewModel,modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     var bottomBarState by remember { mutableStateOf(BottomBarState(true)) }
     PhotosAppMviTheme {
@@ -45,7 +46,7 @@ fun MyPhotosApp(modifier: Modifier = Modifier) {
 
             modifier = modifier.fillMaxSize()
         ) { pValues ->
-            NavigationRoot(pValues, navController) {
+            NavigationRoot(pValues, navController,photosViewModel) {
                 bottomBarState = it
             }
         }

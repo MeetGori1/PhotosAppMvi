@@ -87,4 +87,8 @@ dependencies {
     implementation(libs.gson)
     //coil-image-load
     implementation(libs.coil.compose)
+
+    //paging 3
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.runtime)
 }

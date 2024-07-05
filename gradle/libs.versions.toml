@@ -14,6 +14,7 @@ navigationCompose = "2.8.0-beta04"
 ktor = "2.3.2"
 gson = "2.11.0"
 coilCompose = "2.6.0"
+pagingCompose = "3.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +45,9 @@ ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 #coil
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+#compose
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
