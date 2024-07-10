@@ -1,5 +1,7 @@
 package com.meet.photosappmvi.presentation.navigation
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -15,35 +17,54 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
+import com.meet.photosappmvi.data.model.Photo
 import com.meet.photosappmvi.presentation.screens.FavScreen
 import com.meet.photosappmvi.presentation.screens.HomeScreen
+import com.meet.photosappmvi.presentation.screens.PhotoDetailsScreen
 import com.meet.photosappmvi.presentation.screens.ProfileScreen
 import com.meet.photosappmvi.presentation.screens.SearchScreen
 import kotlinx.serialization.Serializable
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun NavigationRoot(
     modifier: Modifier,
     navController: NavHostController,
     updateBottomBarState: (BottomBarState) -> Unit
 ) {
-    NavHost(navController = navController, startDestination = NavRoute.HomeScreenScreenRoute) {
-        //bottom navigation screens
-        composable<NavRoute.HomeScreenScreenRoute> {
-            updateBottomBarState(BottomBarState(true))
-            HomeScreen(modifier = modifier)
-        }
-        composable<NavRoute.SearchScreenRoute> {
-            updateBottomBarState(BottomBarState(true))
-            SearchScreen(navController = navController, modifier)
-        }
-        composable<NavRoute.FavScreenScreenRoute> {
-            updateBottomBarState(BottomBarState(true))
-            FavScreen(navController = navController, modifier)
-        }
-        composable<NavRoute.ProfileScreenScreenRoute> {
-            updateBottomBarState(BottomBarState(true))
-            ProfileScreen(navController = navController, modifier)
+    SharedTransitionLayout {
+        NavHost(navController = navController, startDestination = NavRoute.HomeScreenScreenRoute) {
+            //bottom navigation screens
+            composable<NavRoute.HomeScreenScreenRoute> {
+                updateBottomBarState(BottomBarState(true))
+                HomeScreen(modifier = modifier)
+            }
+            composable<NavRoute.SearchScreenRoute> {
+                updateBottomBarState(BottomBarState(true))
+                SearchScreen(navController = navController, modifier)
+            }
+            composable<NavRoute.FavScreenScreenRoute> {
+                updateBottomBarState(BottomBarState(true))
+                FavScreen(navController = navController, modifier, animatedVisibilityScope = this)
+            }
+            composable<NavRoute.ProfileScreenScreenRoute> {
+                updateBottomBarState(BottomBarState(true))
+                ProfileScreen(navController = navController, modifier)
+            }
+
+            composable<NavRoute.PhotoDetailScreenRoute> {
+                val arg = it.toRoute<NavRoute.PhotoDetailScreenRoute>()
+                updateBottomBarState(BottomBarState(false))
+                PhotoDetailsScreen(
+                    navController = navController,
+                    url = arg.photo,
+                    description = arg.description,
+                    likes = arg.likes,
+                    modifier = modifier,
+                    animatedVisibilityScope = this
+                )
+            }
         }
     }
 }
@@ -72,6 +93,13 @@ sealed interface NavRoute {
     data object ProfileScreenScreenRoute : NavRoute {
         override val showBottomBar = true
     }
+
+    @Serializable
+    data class PhotoDetailScreenRoute(val photo: String, val description: String, val likes: Int) :
+        NavRoute {
+        override val showBottomBar = false
+    }
+
 }
 
 data class BottomNavigationItem(

@@ -20,15 +20,15 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
-import com.meet.photosappmvi.data.model.Photos
+import com.meet.photosappmvi.data.model.Photo
 
 @Composable
-fun ListPhotosPaging(lazyPagingItems: LazyPagingItems<Photos>, modifier: Modifier = Modifier) {
+fun ListPhotosPaging(lazyPagingItems: LazyPagingItems<Photo>, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(lazyPagingItems.itemCount) { index ->
             val photo = lazyPagingItems[index]
             if (photo != null) {
-                PhotoItem(item = photo)
+                PhotoItem(item = photo){}
             }
         }
 
@@ -68,9 +68,8 @@ fun ListPhotosPaging(lazyPagingItems: LazyPagingItems<Photos>, modifier: Modifie
     }
 }
 
-
 @Composable
-fun PhotoItem(item: Photos, modifier: Modifier = Modifier) {
+fun PhotoItem(item: Photo, modifier: Modifier = Modifier, onclick:(Photo)->Unit) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -78,6 +77,7 @@ fun PhotoItem(item: Photos, modifier: Modifier = Modifier) {
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        onClick = { onclick(item) }
     ) {
         Column(
             modifier = modifier

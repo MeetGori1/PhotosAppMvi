@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -91,4 +92,7 @@ dependencies {
     //paging 3
     implementation(libs.androidx.paging.compose)
     implementation(libs.androidx.paging.runtime)
+
+    //shared element animation
+    implementation(libs.androidx.compose.animation)
 }
