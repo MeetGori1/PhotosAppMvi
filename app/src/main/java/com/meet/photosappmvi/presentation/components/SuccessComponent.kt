@@ -18,8 +18,5 @@ fun SuccessComponent(
     modifier: Modifier = Modifier,
     onSearchClick: (String) -> Unit
 ) {
-    Column() {
-        SearchComponent(onSearchClick = onSearchClick)
-        ListPhotos(lazyPagingItems = lazyPagingItems)
-    }
+
 }

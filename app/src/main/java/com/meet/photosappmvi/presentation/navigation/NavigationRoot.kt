@@ -1,6 +1,5 @@
 package com.meet.photosappmvi.presentation.navigation
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
@@ -11,6 +10,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -19,33 +19,31 @@ import com.meet.photosappmvi.presentation.screens.FavScreen
 import com.meet.photosappmvi.presentation.screens.HomeScreen
 import com.meet.photosappmvi.presentation.screens.ProfileScreen
 import com.meet.photosappmvi.presentation.screens.SearchScreen
-import com.meet.photosappmvi.viewmodel.PhotosViewModel
 import kotlinx.serialization.Serializable
 
 @Composable
 fun NavigationRoot(
-    paddingValues: PaddingValues,
+    modifier: Modifier,
     navController: NavHostController,
-    viewModel: PhotosViewModel,
     updateBottomBarState: (BottomBarState) -> Unit
 ) {
     NavHost(navController = navController, startDestination = NavRoute.HomeScreenScreenRoute) {
         //bottom navigation screens
         composable<NavRoute.HomeScreenScreenRoute> {
             updateBottomBarState(BottomBarState(true))
-            HomeScreen(viewModel)
+            HomeScreen(modifier = modifier)
         }
         composable<NavRoute.SearchScreenRoute> {
             updateBottomBarState(BottomBarState(true))
-            SearchScreen(navController = navController)
+            SearchScreen(navController = navController, modifier)
         }
         composable<NavRoute.FavScreenScreenRoute> {
             updateBottomBarState(BottomBarState(true))
-            FavScreen(navController = navController)
+            FavScreen(navController = navController, modifier)
         }
         composable<NavRoute.ProfileScreenScreenRoute> {
             updateBottomBarState(BottomBarState(true))
-            ProfileScreen(navController = navController)
+            ProfileScreen(navController = navController, modifier)
         }
     }
 }
@@ -113,6 +111,5 @@ object BottomItems {
         ),
     )
 }
-
 
 data class BottomBarState(var isVisible: Boolean)

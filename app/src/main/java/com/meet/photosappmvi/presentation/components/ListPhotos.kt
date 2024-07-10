@@ -74,15 +74,14 @@ fun PhotoItem(item: Photos, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(15.dp),
+            .padding(horizontal = 15.dp, vertical = 5.dp),
         shape = MaterialTheme.shapes.medium,
         colors = CardDefaults.cardColors(containerColor = Color.White),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Column(
             modifier = modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+                .fillMaxSize()
         ) {
             if (item.urls?.full.isNullOrEmpty().not()) {
                 AsyncImage(
