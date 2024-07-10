@@ -9,7 +9,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.meet.photosappmvi.presentation.components.ErrorComponent
-import com.meet.photosappmvi.presentation.components.ListPhotos
+import com.meet.photosappmvi.presentation.components.ListPhotosPaging
 import com.meet.photosappmvi.presentation.components.LoadingComponent
 import com.meet.photosappmvi.presentation.components.SearchComponent
 import com.meet.photosappmvi.viewmodel.PhotoIntent
@@ -23,7 +23,7 @@ fun SearchScreen(
     photosViewModel: PhotosViewModel = viewModel()
 ) {
     LaunchedEffect(key1 = true) {
-        photosViewModel.processIntent(PhotoIntent.GetSearchedPhotos(query = "cat"))
+        photosViewModel.processIntent(PhotoIntent.GetSearchedPhotos(query = "turkey"))
     }
 
     Column(modifier = modifier) {
@@ -41,9 +41,10 @@ fun SearchScreen(
             }
 
             is PhotosState.Success -> {
-                ListPhotos(lazyPagingItems = state.data.collectAsLazyPagingItems())
+                ListPhotosPaging(lazyPagingItems = state.data.collectAsLazyPagingItems())
             }
+
+            else->{}
         }
     }
-
 }

@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
 import com.meet.photosappmvi.domain.api.HttpRoutes
 import com.meet.photosappmvi.domain.pagingdatasource.PagingDataSource
+import com.meet.photosappmvi.domain.repository.PhotosRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -23,6 +24,12 @@ class PhotosViewModel : ViewModel() {
                 }
                 is PhotoIntent.GetSearchedPhotos -> {
                     searchPhotos(intent.query)
+                }
+                is PhotoIntent.GetLikedPhotos -> {
+                    getLikedPhotos()
+                }
+                is PhotoIntent.GetUserProfile -> {
+                    getUserProfile()
                 }
             }
         }
@@ -50,6 +57,30 @@ class PhotosViewModel : ViewModel() {
                     PagingDataSource(HttpRoutes.SEARCH_PHOTOS,query=query)
                 }.flow.cachedIn(viewModelScope)
                 _state.value = PhotosState.Success(photos)
+            } catch (e: Exception) {
+                _state.value = PhotosState.Error("Error fetching photos: ${e.message}")
+            }
+        }
+    }
+
+    private fun getLikedPhotos(){
+        viewModelScope.launch {
+            _state.value = PhotosState.Loading
+            try {
+                val likedPhotoList = PhotosRepository.getLikedPhotos()
+                _state.value = PhotosState.OnLikedPhotoResult(likedPhotoList)
+            } catch (e: Exception) {
+                _state.value = PhotosState.Error("Error fetching photos: ${e.message}")
+            }
+        }
+    }
+
+    private fun getUserProfile(){
+        viewModelScope.launch {
+            _state.value = PhotosState.Loading
+            try {
+                val likedPhotoList = PhotosRepository.getUserProfile()
+                _state.value = PhotosState.OnUserProfileResult(likedPhotoList)
             } catch (e: Exception) {
                 _state.value = PhotosState.Error("Error fetching photos: ${e.message}")
             }

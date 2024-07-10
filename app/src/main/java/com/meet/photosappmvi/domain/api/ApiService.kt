@@ -2,6 +2,7 @@ package com.meet.photosappmvi.domain.api
 
 import com.meet.photosappmvi.data.base.BaseModel
 import com.meet.photosappmvi.data.model.Photos
+import com.meet.photosappmvi.data.model.User
 import com.meet.photosappmvi.domain.client.KtorClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -29,6 +30,24 @@ class ApiService {
                 parameters.append("page", page.toString())
                 parameters.append("per_page", perPage.toString())
                 parameters.append("query", query)
+            }
+        }
+        return response.body()
+    }
+
+    suspend fun getLikedPhotos(): List<Photos> {
+        val response: HttpResponse = ktorClient.get {
+            url {
+                path(HttpRoutes.GET_LIKED_PHOTOS)
+            }
+        }
+        return response.body()
+    }
+
+    suspend fun getUserProfile(): User {
+        val response: HttpResponse = ktorClient.get {
+            url {
+                path(HttpRoutes.GET_USER)
             }
         }
         return response.body()

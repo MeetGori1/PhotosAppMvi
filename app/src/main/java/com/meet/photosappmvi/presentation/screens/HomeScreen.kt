@@ -8,9 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.meet.photosappmvi.presentation.components.ErrorComponent
-import com.meet.photosappmvi.presentation.components.ListPhotos
+import com.meet.photosappmvi.presentation.components.ListPhotosPaging
 import com.meet.photosappmvi.presentation.components.LoadingComponent
-import com.meet.photosappmvi.presentation.components.SearchComponent
 import com.meet.photosappmvi.viewmodel.PhotoIntent
 import com.meet.photosappmvi.viewmodel.PhotosState
 import com.meet.photosappmvi.viewmodel.PhotosViewModel
@@ -33,8 +32,9 @@ fun HomeScreen(modifier: Modifier = Modifier,photosViewModel: PhotosViewModel = 
             }
 
             is PhotosState.Success -> {
-                ListPhotos(lazyPagingItems = state.data.collectAsLazyPagingItems())
+                ListPhotosPaging(lazyPagingItems = state.data.collectAsLazyPagingItems())
             }
+            else->{}
         }
     }
 }
