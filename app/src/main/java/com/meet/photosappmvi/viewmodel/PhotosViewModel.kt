@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import com.meet.photosappmvi.domain.api.HttpRoutes
 import com.meet.photosappmvi.domain.pagingdatasource.PagingDataSource
 import com.meet.photosappmvi.domain.repository.PhotosRepository
+import com.meet.photosappmvi.wrapper.Response
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -66,11 +67,14 @@ class PhotosViewModel : ViewModel() {
     private fun getLikedPhotos(){
         viewModelScope.launch {
             _state.value = PhotosState.Loading
-            try {
-                val likedPhotoList = PhotosRepository.getLikedPhotos()
-                _state.value = PhotosState.OnLikedPhotoResult(likedPhotoList)
-            } catch (e: Exception) {
-                _state.value = PhotosState.Error("Error fetching photos: ${e.message}")
+            when(val response = PhotosRepository.getLikedPhotos()) {
+                is Response.Success -> {
+                    _state.value = PhotosState.OnLikedPhotoResult(response.value)
+                }
+
+                is Response.Error -> {
+                    _state.value = PhotosState.Error(response.error)
+                }
             }
         }
     }
@@ -78,11 +82,14 @@ class PhotosViewModel : ViewModel() {
     private fun getUserProfile(){
         viewModelScope.launch {
             _state.value = PhotosState.Loading
-            try {
-                val likedPhotoList = PhotosRepository.getUserProfile()
-                _state.value = PhotosState.OnUserProfileResult(likedPhotoList)
-            } catch (e: Exception) {
-                _state.value = PhotosState.Error("Error fetching photos: ${e.message}")
+            when(val response = PhotosRepository.getUserProfile()) {
+                is Response.Success -> {
+                    _state.value = PhotosState.OnUserProfileResult(response.value)
+                }
+
+                is Response.Error -> {
+                    _state.value = PhotosState.Error(response.error)
+                }
             }
         }
     }
