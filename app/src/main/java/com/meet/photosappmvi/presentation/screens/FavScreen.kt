@@ -42,7 +42,7 @@ fun SharedTransitionScope.FavScreen(
 
             is PhotosState.OnLikedPhotoResult->{
                 ListPhotos(state.photoList,animatedVisibilityScope){
-                    navController.navigate(NavRoute.PhotoDetailScreenRoute(photo = it.urls?.full?:"",description = it.description?:"",likes = it.likes?:0))
+                    navController.navigate(NavRoute.PhotoDetailScreenRoute(photo = it))
                 }
             }
 

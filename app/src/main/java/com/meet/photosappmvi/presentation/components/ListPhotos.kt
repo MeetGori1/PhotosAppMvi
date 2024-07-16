@@ -22,11 +22,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import com.google.gson.Gson
 import com.meet.photosappmvi.data.model.Photo
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
-fun SharedTransitionScope.ListPhotos(photoList: List<Photo>, animatedVisibilityScope: AnimatedVisibilityScope, modifier: Modifier = Modifier, onclick:(Photo)->Unit) {
+fun SharedTransitionScope.ListPhotos(photoList: List<Photo>, animatedVisibilityScope: AnimatedVisibilityScope, modifier: Modifier = Modifier, onclick:(String)->Unit) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(photoList.size) { index ->
             val photo = photoList[index]
@@ -38,7 +39,7 @@ fun SharedTransitionScope.ListPhotos(photoList: List<Photo>, animatedVisibilityS
                 shape = MaterialTheme.shapes.medium,
                 colors = CardDefaults.cardColors(containerColor = Color.White),
                 elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                onClick = { onclick(photo) }
+                onClick = { onclick(Gson().toJson(photo)) }
             ) {
                 Column(
                     modifier = modifier

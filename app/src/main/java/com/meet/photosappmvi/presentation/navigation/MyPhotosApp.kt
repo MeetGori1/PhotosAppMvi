@@ -57,7 +57,13 @@ fun MyPhotosBottomBar(
                     selected = selectedItemIndex == index,
                     onClick = {
                         selectedItemIndex = index
-                        navController.navigate(item.routes)
+                        navController.navigate(item.routes){
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     },
                     icon = {
                         Icon(

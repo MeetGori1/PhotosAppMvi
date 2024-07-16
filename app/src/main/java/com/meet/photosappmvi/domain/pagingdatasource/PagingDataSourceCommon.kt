@@ -16,7 +16,6 @@ class PagingDataSource(private val endPoint: String, private val query: String? 
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(1)
                 ?: state.closestPageToPosition(anchorPosition)?.nextKey?.minus(1)
         }
-        
     }
 
     @SuppressLint("NewApi")

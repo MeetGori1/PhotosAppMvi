@@ -31,19 +31,20 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.google.gson.Gson
+import com.meet.photosappmvi.data.model.Photo
 import com.meet.photosappmvi.viewmodel.PhotosViewModel
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.PhotoDetailsScreen(
-    url: String,
-    description: String,
-    likes: Int,
+    photo: String,
     navController: NavHostController,
     modifier: Modifier = Modifier,
     animatedVisibilityScope: AnimatedVisibilityScope,
     photosViewModel: PhotosViewModel = viewModel()
 ) {
+    val photoItem = Gson().fromJson(photo, Photo::class.java)
         LazyColumn(
             modifier = modifier
                 .fillMaxSize(),
@@ -64,12 +65,12 @@ fun SharedTransitionScope.PhotoDetailsScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         AsyncImage(
-                            model = url,
+                            model = photoItem.urls?.full,
                             contentDescription = "Profile Picture",
                             modifier = Modifier
                                 .fillMaxSize()
                                 .sharedElement(
-                                    state = rememberSharedContentState(key = "image/$url"),
+                                    state = rememberSharedContentState(key = "image/${photoItem.urls?.full}"),
                                     animatedVisibilityScope = animatedVisibilityScope,
                                     boundsTransform = { _, _ ->
                                         tween(durationMillis = 1000)
@@ -83,7 +84,7 @@ fun SharedTransitionScope.PhotoDetailsScreen(
                         Spacer(modifier = Modifier.height(16.dp))
 
                         Text(
-                            text = description,
+                            text = photoItem.description?:"",
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -102,7 +103,7 @@ fun SharedTransitionScope.PhotoDetailsScreen(
                         .padding(vertical = 8.dp),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    LikesItem(count = likes ?: 0, label = "Likes")
+                    LikesItem(count = photoItem.likes ?: 0, label = "Likes")
                 }
             }
         }

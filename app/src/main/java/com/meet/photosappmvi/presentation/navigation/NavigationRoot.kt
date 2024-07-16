@@ -58,9 +58,7 @@ fun NavigationRoot(
                 updateBottomBarState(BottomBarState(false))
                 PhotoDetailsScreen(
                     navController = navController,
-                    url = arg.photo,
-                    description = arg.description,
-                    likes = arg.likes,
+                    photo =arg.photo,
                     modifier = modifier,
                     animatedVisibilityScope = this
                 )
@@ -71,44 +69,32 @@ fun NavigationRoot(
 
 
 sealed interface NavRoute {
-    val showBottomBar: Boolean
+    var showBottomBar: Boolean
 
     //bottom navigation screens
     @Serializable
     data object HomeScreenScreenRoute : NavRoute {
-        override val showBottomBar = true
+        override var showBottomBar = true
     }
 
     @Serializable
     data object SearchScreenRoute : NavRoute {
-        override val showBottomBar = true
+        override var showBottomBar = true
     }
 
     @Serializable
     data object FavScreenScreenRoute : NavRoute {
-        override val showBottomBar = true
+        override var showBottomBar = true
     }
 
     @Serializable
     data object ProfileScreenScreenRoute : NavRoute {
-        override val showBottomBar = true
+        override var showBottomBar = true
     }
 
     @Serializable
-    data class PhotoDetailScreenRoute(val photo: String, val description: String, val likes: Int) :
-        NavRoute {
-        override val showBottomBar = false
-    }
-
+    data class PhotoDetailScreenRoute(val photo: String)
 }
-
-data class BottomNavigationItem(
-    val title: String,
-    val selectedIcon: ImageVector,
-    val unselectedIcon: ImageVector,
-    val routes: NavRoute,
-    val hasUpdates: Boolean = false
-)
 
 object BottomItems {
     val items = listOf(
@@ -141,3 +127,11 @@ object BottomItems {
 }
 
 data class BottomBarState(var isVisible: Boolean)
+
+data class BottomNavigationItem(
+    val title: String,
+    val selectedIcon: ImageVector,
+    val unselectedIcon: ImageVector,
+    val routes: NavRoute,
+    val hasUpdates: Boolean = false
+)
