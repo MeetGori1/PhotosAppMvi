@@ -31,7 +31,9 @@ fun SearchScreen(
             photosViewModel.processIntent(PhotoIntent.GetSearchedPhotos(query = query))
         })
 
-        when (val state = photosViewModel.state.collectAsState().value) {
+        when (val state = photosViewModel.searchedPhotosState.collectAsState().value) {
+            is PhotosState.Initial -> {}
+
             is PhotosState.Loading -> LoadingComponent(modifier)
 
             is PhotosState.Error -> {

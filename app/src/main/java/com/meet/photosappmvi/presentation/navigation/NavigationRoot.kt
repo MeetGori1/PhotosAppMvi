@@ -18,7 +18,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.meet.photosappmvi.data.model.Photo
 import com.meet.photosappmvi.presentation.screens.FavScreen
 import com.meet.photosappmvi.presentation.screens.HomeScreen
 import com.meet.photosappmvi.presentation.screens.PhotoDetailsScreen
@@ -31,31 +30,25 @@ import kotlinx.serialization.Serializable
 fun NavigationRoot(
     modifier: Modifier,
     navController: NavHostController,
-    updateBottomBarState: (BottomBarState) -> Unit
 ) {
     SharedTransitionLayout {
         NavHost(navController = navController, startDestination = NavRoute.HomeScreenScreenRoute) {
             //bottom navigation screens
             composable<NavRoute.HomeScreenScreenRoute> {
-                updateBottomBarState(BottomBarState(true))
                 HomeScreen(modifier = modifier)
             }
             composable<NavRoute.SearchScreenRoute> {
-                updateBottomBarState(BottomBarState(true))
                 SearchScreen(navController = navController, modifier)
             }
             composable<NavRoute.FavScreenScreenRoute> {
-                updateBottomBarState(BottomBarState(true))
                 FavScreen(navController = navController, modifier, animatedVisibilityScope = this)
             }
             composable<NavRoute.ProfileScreenScreenRoute> {
-                updateBottomBarState(BottomBarState(true))
                 ProfileScreen(navController = navController, modifier)
             }
 
             composable<NavRoute.PhotoDetailScreenRoute> {
                 val arg = it.toRoute<NavRoute.PhotoDetailScreenRoute>()
-                updateBottomBarState(BottomBarState(false))
                 PhotoDetailsScreen(
                     navController = navController,
                     url = arg.photo,
@@ -73,7 +66,6 @@ fun NavigationRoot(
 sealed interface NavRoute {
     val showBottomBar: Boolean
 
-    //bottom navigation screens
     @Serializable
     data object HomeScreenScreenRoute : NavRoute {
         override val showBottomBar = true
@@ -139,5 +131,3 @@ object BottomItems {
         ),
     )
 }
-
-data class BottomBarState(var isVisible: Boolean)
