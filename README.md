@@ -26,9 +26,8 @@ This architecture promotes a clear separation of concerns, testability, and pred
 **Error Handling**
 
 Robust error handling mechanisms are implemented, including:
-
-Network errors
-Parsing errors
-Business logic errors
-UI error states
+Network errors <br />
+Parsing errors <br />
+Business logic errors <br />
+UI error states <br />
 These are handled gracefully to provide informative feedback to the user.
