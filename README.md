@@ -18,16 +18,16 @@ This repository houses a production-ready Android application built using Jetpac
 
 The application follows the MVI architecture, comprising:
 
-**Model**: Represents the application's state.
-**View**: Renders the UI based on the current state.
-**Intent**: Captures user interactions and triggers state updates.
+* **Model**: Represents the application's state. <br />
+* **View**: Renders the UI based on the current state. <br />
+* **Intent**: Captures user interactions and triggers state updates. <br />
 This architecture promotes a clear separation of concerns, testability, and predictable state management.
 
 **Error Handling**
 
 Robust error handling mechanisms are implemented, including:
-Network errors <br />
-Parsing errors <br />
-Business logic errors <br />
-UI error states <br />
+* Network errors <br />
+* Parsing errors <br />
+* Business logic errors <br />
+* UI error states <br />
 These are handled gracefully to provide informative feedback to the user.
