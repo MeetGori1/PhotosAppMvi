@@ -20,15 +20,16 @@ import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import com.google.gson.Gson
 import com.meet.photosappmvi.data.model.Photo
 
 @Composable
-fun ListPhotosPaging(lazyPagingItems: LazyPagingItems<Photo>, modifier: Modifier = Modifier) {
+fun ListPhotosPaging(lazyPagingItems: LazyPagingItems<Photo>, modifier: Modifier = Modifier,onclick: (String) -> Unit) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(lazyPagingItems.itemCount) { index ->
             val photo = lazyPagingItems[index]
             if (photo != null) {
-                PhotoItem(item = photo){}
+                PhotoItem(item = photo){onclick(Gson().toJson(it))}
             }
         }
 

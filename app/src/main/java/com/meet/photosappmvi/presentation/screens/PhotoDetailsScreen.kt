@@ -45,85 +45,86 @@ fun SharedTransitionScope.PhotoDetailsScreen(
     photosViewModel: PhotosViewModel = viewModel()
 ) {
     val photoItem = Gson().fromJson(photo, Photo::class.java)
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // Profile Header
-            item {
-                Card(
+
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        // Profile Header
+        item {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-                    shape = RoundedCornerShape(16.dp)
+                        .fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Column(
+                    AsyncImage(
+                        model = photoItem.urls?.full,
+                        contentDescription = "Profile Picture",
                         modifier = Modifier
-                            .fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        AsyncImage(
-                            model = photoItem.urls?.full,
-                            contentDescription = "Profile Picture",
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .sharedElement(
-                                    state = rememberSharedContentState(key = "image/${photoItem.urls?.full}"),
-                                    animatedVisibilityScope = animatedVisibilityScope,
-                                    boundsTransform = { _, _ ->
-                                        tween(durationMillis = 1000)
-                                    }
-                                ),
-                            contentScale = ContentScale.Crop,
-                            placeholder = rememberVectorPainter(image = Icons.Filled.Person),
-                            error = rememberVectorPainter(image = Icons.Filled.Person)
-                        )
+                            .fillMaxSize()
+                            .sharedElement(
+                                state = rememberSharedContentState(key = "image/${photoItem.urls?.full}"),
+                                animatedVisibilityScope = animatedVisibilityScope,
+                                boundsTransform = { _, _ ->
+                                    tween(durationMillis = 1000)
+                                }
+                            ),
+                        contentScale = ContentScale.Crop,
+                        placeholder = rememberVectorPainter(image = Icons.Filled.Person),
+                        error = rememberVectorPainter(image = Icons.Filled.Person)
+                    )
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                        Text(
-                            text = photoItem.description?:"",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold
-                        )
+                    Text(
+                        text = photoItem.description ?: "",
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold
+                    )
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(16.dp))
 
-                    }
-                }
-            }
-
-            // Followers and Following
-            item {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 8.dp),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    LikesItem(count = photoItem.likes ?: 0, label = "Likes")
                 }
             }
         }
-    }
 
-    @Composable
-    fun LikesItem(count: Int, label: String) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(
-                text = count.toString(),
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = label,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+        // Followers and Following
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                LikesItem(count = photoItem.likes ?: 0, label = "Likes")
+            }
         }
     }
+}
+
+@Composable
+fun LikesItem(count: Int, label: String) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = count.toString(),
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
+}
 
 
 

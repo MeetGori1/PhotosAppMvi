@@ -6,16 +6,18 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.meet.photosappmvi.presentation.components.ErrorComponent
 import com.meet.photosappmvi.presentation.components.ListPhotosPaging
 import com.meet.photosappmvi.presentation.components.LoadingComponent
+import com.meet.photosappmvi.presentation.navigation.NavRoute
 import com.meet.photosappmvi.viewmodel.PhotoIntent
 import com.meet.photosappmvi.viewmodel.PhotosState
 import com.meet.photosappmvi.viewmodel.PhotosViewModel
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier,photosViewModel: PhotosViewModel = viewModel()) {
+fun HomeScreen(navController: NavHostController, modifier: Modifier = Modifier, photosViewModel: PhotosViewModel = viewModel()) {
     LaunchedEffect(key1 = true) {
         photosViewModel.processIntent(PhotoIntent.GetRandomPhotos)
     }
@@ -33,7 +35,9 @@ fun HomeScreen(modifier: Modifier = Modifier,photosViewModel: PhotosViewModel = 
             }
 
             is PhotosState.Success -> {
-                ListPhotosPaging(lazyPagingItems = state.data.collectAsLazyPagingItems())
+                ListPhotosPaging(lazyPagingItems = state.data.collectAsLazyPagingItems()){
+                    navController.navigate(NavRoute.PhotoDetailScreenRoute(photo = it))
+                }
             }
             else->{}
         }

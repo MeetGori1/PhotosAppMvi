@@ -12,6 +12,7 @@ import com.meet.photosappmvi.presentation.components.ErrorComponent
 import com.meet.photosappmvi.presentation.components.ListPhotosPaging
 import com.meet.photosappmvi.presentation.components.LoadingComponent
 import com.meet.photosappmvi.presentation.components.SearchComponent
+import com.meet.photosappmvi.presentation.navigation.NavRoute
 import com.meet.photosappmvi.viewmodel.PhotoIntent
 import com.meet.photosappmvi.viewmodel.PhotosState
 import com.meet.photosappmvi.viewmodel.PhotosViewModel
@@ -43,7 +44,9 @@ fun SearchScreen(
             }
 
             is PhotosState.Success -> {
-                ListPhotosPaging(lazyPagingItems = state.data.collectAsLazyPagingItems())
+                ListPhotosPaging(lazyPagingItems = state.data.collectAsLazyPagingItems()){
+                    navController.navigate(NavRoute.PhotoDetailScreenRoute(photo = it))
+                }
             }
 
             else->{}

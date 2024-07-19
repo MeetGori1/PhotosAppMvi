@@ -35,7 +35,7 @@ fun NavigationRoot(
         NavHost(navController = navController, startDestination = NavRoute.HomeScreenScreenRoute) {
             //bottom navigation screens
             composable<NavRoute.HomeScreenScreenRoute> {
-                HomeScreen(modifier = modifier)
+                HomeScreen(navController=navController, modifier = modifier)
             }
             composable<NavRoute.SearchScreenRoute> {
                 SearchScreen(navController = navController, modifier)
@@ -51,10 +51,7 @@ fun NavigationRoot(
                 val arg = it.toRoute<NavRoute.PhotoDetailScreenRoute>()
                 PhotoDetailsScreen(
                     navController = navController,
-                    url = arg.photo,
-                    description = arg.description,
-                    likes = arg.likes,
-                    modifier = modifier,
+                    photo = arg.photo,
                     animatedVisibilityScope = this
                 )
             }
@@ -87,7 +84,7 @@ sealed interface NavRoute {
     }
 
     @Serializable
-    data class PhotoDetailScreenRoute(val photo: String, val description: String, val likes: Int) :
+    data class PhotoDetailScreenRoute(val photo: String) :
         NavRoute {
         override val showBottomBar = false
     }
