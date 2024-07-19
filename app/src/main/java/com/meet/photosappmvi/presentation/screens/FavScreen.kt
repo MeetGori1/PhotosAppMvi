@@ -14,30 +14,30 @@ import com.meet.photosappmvi.presentation.components.ErrorComponent
 import com.meet.photosappmvi.presentation.components.ListPhotos
 import com.meet.photosappmvi.presentation.components.LoadingComponent
 import com.meet.photosappmvi.presentation.navigation.NavRoute
-import com.meet.photosappmvi.viewmodel.PhotoIntent
+import com.meet.photosappmvi.viewmodel.FavIntent
+import com.meet.photosappmvi.viewmodel.FavViewModel
 import com.meet.photosappmvi.viewmodel.PhotosState
-import com.meet.photosappmvi.viewmodel.PhotosViewModel
 
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SharedTransitionScope.FavScreen(
     navController: NavHostController, modifier: Modifier = Modifier,
     animatedVisibilityScope : AnimatedVisibilityScope,
-    photosViewModel: PhotosViewModel = viewModel()
+    favViewModel: FavViewModel = viewModel()
 ) {
+
     LaunchedEffect(key1 = true) {
-        photosViewModel.processIntent(PhotoIntent.GetLikedPhotos)
+        favViewModel.processIntent(FavIntent.GetLikedPhotos)
     }
 
     Column(modifier = modifier) {
 
-        when (val state = photosViewModel.likedPhotosState.collectAsState().value) {
-            is PhotosState.Initial -> {}
+        when (val state = favViewModel.likedFavIntent.collectAsState().value) {
             is PhotosState.Loading -> LoadingComponent(modifier)
 
             is PhotosState.Error -> {
                 ErrorComponent(message = state.message, modifier, onRetry = {
-                    photosViewModel.processIntent(PhotoIntent.GetLikedPhotos)
+                    favViewModel.processIntent(FavIntent.GetLikedPhotos)
                 })
             }
 

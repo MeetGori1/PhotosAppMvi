@@ -42,9 +42,7 @@ fun MyPhotosBottomBar(
         ?: NavRoute.HomeScreenScreenRoute::class.qualifiedName.orEmpty()
 
     BottomAppBar(
-        modifier = Modifier.padding(8.dp),
-        containerColor = Color.White,
-        contentColor = Color.White
+        containerColor = Color.Transparent
     ) {
         BottomItems.items.forEachIndexed { _, item ->
             val isSelected by remember(currentRoute) {

@@ -32,13 +32,12 @@ fun SearchScreen(
         })
 
         when (val state = photosViewModel.searchedPhotosState.collectAsState().value) {
-            is PhotosState.Initial -> {}
 
             is PhotosState.Loading -> LoadingComponent(modifier)
 
             is PhotosState.Error -> {
                 ErrorComponent(message = state.message, modifier, onRetry = {
-                    photosViewModel.processIntent(PhotoIntent.GetRandomPhotos)
+                    photosViewModel.processIntent(PhotoIntent.GetSearchedPhotos(query = "turkey"))
                 })
             }
 

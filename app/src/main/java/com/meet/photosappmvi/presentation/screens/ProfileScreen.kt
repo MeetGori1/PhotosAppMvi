@@ -55,7 +55,7 @@ fun ProfileScreen(
     modifier: Modifier = Modifier,
     photosViewModel: PhotosViewModel = viewModel()
 ) {
-    LaunchedEffect(key1 = true) {
+  /*  LaunchedEffect(key1 = true) {
         photosViewModel.processIntent(PhotoIntent.GetUserProfile)
     }
 
@@ -84,7 +84,7 @@ fun ProfileScreen(
 
             else -> {}
         }
-    }
+    }*/
 }
 
 @Composable
