@@ -22,7 +22,8 @@ fun HomeScreen(modifier: Modifier = Modifier,photosViewModel: PhotosViewModel = 
 
     Column(modifier=modifier) {
 
-        when (val state = photosViewModel.state.collectAsState().value) {
+        when (val state = photosViewModel.randomPhotosState.collectAsState().value) {
+            is PhotosState.Initial -> {}
             is PhotosState.Loading -> LoadingComponent(modifier)
 
             is PhotosState.Error -> {

@@ -59,7 +59,7 @@ fun ProfileScreen(
         photosViewModel.processIntent(PhotoIntent.GetUserProfile)
     }
 
-    val state = photosViewModel.state.collectAsState().value
+    val state = photosViewModel.userProfileState.collectAsState().value
 
     Scaffold(
         topBar = {
