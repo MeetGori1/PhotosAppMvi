@@ -7,6 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -22,32 +26,33 @@ import com.meet.photosappmvi.viewmodel.PhotosViewModel
 @Composable
 fun SharedTransitionScope.FavScreen(
     navController: NavHostController, modifier: Modifier = Modifier,
-    animatedVisibilityScope : AnimatedVisibilityScope,
+    animatedVisibilityScope: AnimatedVisibilityScope,
     photosViewModel: PhotosViewModel = viewModel()
 ) {
-    LaunchedEffect(key1 = true) {
-        photosViewModel.processIntent(PhotoIntent.GetLikedPhotos)
+    val apiCalled = rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        if (!apiCalled.value) {
+            photosViewModel.processIntent(PhotoIntent.GetLikedPhotos)
+            apiCalled.value = true
+        }
     }
 
     Column(modifier = modifier) {
-
         when (val state = photosViewModel.likedPhotosState.collectAsState().value) {
             is PhotosState.Initial -> {}
             is PhotosState.Loading -> LoadingComponent(modifier)
-
             is PhotosState.Error -> {
                 ErrorComponent(message = state.message, modifier, onRetry = {
                     photosViewModel.processIntent(PhotoIntent.GetLikedPhotos)
                 })
             }
-
-            is PhotosState.OnLikedPhotoResult->{
-                ListPhotos(state.photoList,animatedVisibilityScope){
+            is PhotosState.OnLikedPhotoResult -> {
+                ListPhotos(state.photoList, animatedVisibilityScope) {
                     navController.navigate(NavRoute.PhotoDetailScreenRoute(photo = it))
                 }
             }
-
-            else->{}
+            else -> {}
         }
     }
 }

@@ -70,7 +70,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    debugImplementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.material.icons.extended)
 
     //splash screen
     implementation(libs.androidx.core.splashscreen)
