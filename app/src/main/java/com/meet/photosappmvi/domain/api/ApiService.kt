@@ -88,7 +88,7 @@ class ApiService : BaseApiService() {
 //        )
 //
 
-    // this is for upload media via multipart work with any type of data
+    // this is for upload media via multipart work with any type of multiple files data
 //    suspend fun uploadMedia(data: Data): ApiResponse<BaseModel<Response>> =
 //        safeApiCall(
 //            method = HttpMethod.Patch,
@@ -105,6 +105,26 @@ class ApiService : BaseApiService() {
 //            }),
 //            contentType = ContentType.MultiPart.FormData
 //        )
+
+    // this is for upload media via multipart work with any type of single file data
+//    suspend fun completedForm(
+//        form: File,
+//        appointmentId: String,
+//    ): ApiResponse<BaseListModel<EmptyData>> {
+//        return safeListApiCall(
+//            method = HttpMethod.Post,
+//            urlBuilder = {
+//                path("upload media end point")
+//            },
+//            body = MultiPartFormDataContent(formData {
+//                append("form", form.readBytes(), Headers.build {
+//                    append(HttpHeaders.ContentType, form.extension)
+//                    append(HttpHeaders.ContentDisposition, "filename=\"${form.name}\"")
+//                })
+//                append("appointment_id", appointmentId)
+//            }), contentType = ContentType.MultiPart.FormData
+//        )
+//    }
 
 
 }
