@@ -8,7 +8,7 @@ import androidx.paging.cachedIn
 import com.meet.photosappmvi.domain.api.HttpRoutes
 import com.meet.photosappmvi.domain.pagingdatasource.PagingDataSource
 import com.meet.photosappmvi.domain.repository.PhotosRepository
-import com.meet.photosappmvi.wrapper.Response
+import com.meet.photosappmvi.domain.wrapper.Response
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
